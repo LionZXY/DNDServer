@@ -9,7 +9,7 @@ import uk.kulikov.dnd.plugins.configureRouting
 import uk.kulikov.dnd.plugins.configureSerialization
 
 fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
+    embeddedServer(Netty, port = 8080, module = Application::module)
         .start(wait = true)
 }
 
