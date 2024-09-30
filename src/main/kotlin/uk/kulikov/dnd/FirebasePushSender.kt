@@ -36,7 +36,7 @@ fun sendPush(clientToken: String) {
 }
 
 
-fun sendDNDStatusPush(clientToken: String, dnd: Boolean) {
+fun sendDNDStatusPush(clientToken: String, dnd: Boolean, id: String) {
     val message: Message = Message.builder()
         .setAndroidConfig(
             AndroidConfig.builder()
@@ -50,6 +50,7 @@ fun sendDNDStatusPush(clientToken: String, dnd: Boolean) {
                         .setContentAvailable(true)  // For background notifications
                         .build()
                 )
+                .putHeader("apns-priority", "10")
                 .build()
         )
         .setNotification(
@@ -60,6 +61,7 @@ fun sendDNDStatusPush(clientToken: String, dnd: Boolean) {
         )
         .setToken(clientToken)
         .putData("dnd", dnd.toString())
+        .putData("id", id)
         .build()
 
     val response = FirebaseMessaging.getInstance(firebaseApp).send(message)

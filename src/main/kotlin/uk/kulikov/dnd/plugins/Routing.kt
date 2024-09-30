@@ -6,6 +6,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import uk.kulikov.dnd.sendDNDStatusPush
 import uk.kulikov.dnd.sendPush
+import java.util.UUID
 
 private val tokens = HashSet<String>()
 
@@ -32,6 +33,8 @@ fun Application.configureRouting() {
         }
         get("dnd") {
             val statusRaw = call.request.queryParameters["status"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+            val id = call.request.queryParameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
+
             val status = when (statusRaw) {
                 "on" -> true
                 "off" -> false
@@ -39,7 +42,7 @@ fun Application.configureRouting() {
             }
 
             tokens.forEach { token ->
-                sendDNDStatusPush(token, status)
+                sendDNDStatusPush(token, status, id)
             }
             call.respondText("Send dnd status to ${tokens.size} devices")
         }
