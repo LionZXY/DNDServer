@@ -30,9 +30,12 @@ fun sendPush(clientToken: String) {
         .setToken(clientToken)
         .build()
 
-    val response = FirebaseMessaging.getInstance(firebaseApp).send(message)
-
-    println("Successfully sent message: $response")
+    try {
+        val response = FirebaseMessaging.getInstance(firebaseApp).send(message)
+        println("Successfully sent message: $response")
+    } catch (e: Exception) {
+        println("Failed to send message: $e")
+    }
 }
 
 
@@ -64,7 +67,10 @@ fun sendDNDStatusPush(clientToken: String, dnd: Boolean, id: String) {
         .putData("id", id)
         .build()
 
-    val response = FirebaseMessaging.getInstance(firebaseApp).send(message)
-
-    println("Successfully sent message: $response")
+    try {
+        val response = FirebaseMessaging.getInstance(firebaseApp).send(message)
+        println("Successfully sent message: $response")
+    } catch (e: Exception) {
+        println("Failed to send message: $e")
+    }
 }
