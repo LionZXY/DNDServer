@@ -56,12 +56,6 @@ fun sendDNDStatusPush(clientToken: String, dnd: Boolean, id: String) {
                 .putHeader("apns-priority", "10")
                 .build()
         )
-        .setNotification(
-            Notification.builder()
-                .setTitle("Changed DND status")
-                .setBody("DND is now ${if (dnd) "on" else "off"}")
-                .build()
-        )
         .setToken(clientToken)
         .putData("dnd", dnd.toString())
         .putData("id", id)
