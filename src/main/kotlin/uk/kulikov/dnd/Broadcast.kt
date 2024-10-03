@@ -3,11 +3,25 @@ package uk.kulikov.dnd
 import java.io.IOException
 import java.net.*
 
-private const val DEST_PORT = 54678
+private const val DEST_PORT = 32411
+
+fun main() {
+    while (true) {
+        println("Start round for sending")
+        sendBroadcast()
+        Thread.sleep(1000)
+    }
+}
 
 fun sendBroadcast() {
     listAllBroadcastAddresses().forEach {
-        broadcast("Hello", it);
+        try {
+            broadcast("Hello", it)
+            println("Successfull to send broadcast to $it")
+        } catch (e: IOException) {
+            e.printStackTrace()
+            println("Failed to send broadcast to $it")
+        }
     }
 }
 
